@@ -1,0 +1,12 @@
+{
+  "name": "tlorc",
+  "version": "0.1.0",
+  "description": "Utils library for JavaScript/TypeScript, so you don't have to reinvent the wheel.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "utils"
+  ],
+  "author": "Dominik Lewandowski",
+  "license": "ISC"
+}
