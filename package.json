@@ -7,6 +7,10 @@
   "keywords": [
     "utils"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlo-devs/tlorc.git"
+  },
   "author": "Dominik Lewandowski",
   "license": "ISC"
 }
