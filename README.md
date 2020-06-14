@@ -35,5 +35,7 @@ scrollEvent();
 ```
 
 ##Patch Notes
+####0.2.2
+- Improved type checking
 ####0.2.0
 - Added removing event listeners via `tloEvent.remove('eventName')` or `tloEvent.removeAll()`.

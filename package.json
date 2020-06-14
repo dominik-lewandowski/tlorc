@@ -15,6 +15,14 @@
     "type": "git",
     "url": "https://github.com/tlo-devs/tlorc.git"
   },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
   "author": "Dominik Lewandowski",
-  "license": "ISC"
+  "license": "ISC",
+  "files": ["lib/**/*"],
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  }
 }

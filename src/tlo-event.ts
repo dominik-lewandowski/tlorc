@@ -1,11 +1,11 @@
-import {TloEventCallback} from "./models/tlo-event-callback";
-import {EventTypeParameter} from "./models/event-type-parameter";
-import {TloEventModel} from "./models/tlo-event-model";
+import {TloEventCallback} from "./types/tlo-event-callback";
+import {EventTypeParameter} from "./types/event-type-parameter";
+import {TloEventModel} from "./types/tlo-event-model";
 
 export class TloEvent implements TloEventModel {
   private readonly el: HTMLElement | Window;
   private readonly activeEvents: TloEventCallback[];
-  private throttleId: number;
+  private throttleId: number | undefined;
 
   constructor(element: HTMLElement | Window) {
     this.el = element;
