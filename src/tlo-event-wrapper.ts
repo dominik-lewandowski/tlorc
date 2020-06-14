@@ -1,13 +1,15 @@
-import {TloEventConfig} from "./types/tlo-event-config";
-import {TloEventTypeParameter} from "./types/tlo-event-type-parameter";
-import {TloEventWrapperModel} from "./types/tlo-event-wrapper-model";
-import {TloTypeWithOptions} from "./types/tlo-type-with-options";
+import {TloEventConfig} from "./types/tlo-event-wrapper/tlo-event-config";
+import {TloEventTypeParameter} from "./types/tlo-event-wrapper/tlo-event-type-parameter";
+import {TloEventWrapperModel} from "./types/tlo-event-wrapper/tlo-event-wrapper-model";
+import {TloTypeWithOptions} from "./types/tlo-event-wrapper/tlo-type-with-options";
+import {TloElement} from "./types/tlo-event-wrapper/tlo-element";
 
 export class TloEventWrapper implements TloEventWrapperModel {
-  private readonly el: HTMLElement | Window;
-  private readonly activeEvents: TloEventConfig[];
+  private readonly el: TloElement;
+  private activeEvents: TloEventConfig[];
 
-  constructor(element: HTMLElement | Window) {
+  constructor(element: TloElement) {
+    if (element === null) throw new Error('The element cannot be null');
     this.el = element;
     this.activeEvents = [];
   }
@@ -61,6 +63,8 @@ export class TloEventWrapper implements TloEventWrapperModel {
     TloEventWrapper.iterateThroughTypes(types, event => {
       const active = this.findActiveByType(event.type);
       if (active) {
+
+        if (this.el === null) throw new Error('The element does not exist.');
         this.el.removeEventListener(active.event.type, active.callback, active.event.useCapture);
       }
     });
@@ -68,7 +72,7 @@ export class TloEventWrapper implements TloEventWrapperModel {
 
   removeAll(): void {
     for (const active of this.activeEvents) {
-      this.el.removeEventListener(active.event.type, active.callback, active.event.useCapture);
+      this.removeListener(active);
     }
   }
 
@@ -78,6 +82,13 @@ export class TloEventWrapper implements TloEventWrapperModel {
 
   private initListener(event: TloTypeWithOptions, callback: (event?: Event) => void): void {
     this.activeEvents.push({event, callback});
+    if (this.el === null) throw new Error('The element does not exist.');
     this.el.addEventListener(event.type, callback, event.useCapture);
+  }
+
+  private removeListener(active: TloEventConfig): void {
+    this.activeEvents = this.activeEvents.filter(e => e.event.type !== active.event.type);
+    if (this.el === null) throw new Error('The element does not exist.');
+    this.el.removeEventListener(active.event.type, active.callback, active.event.useCapture);
   }
 }
