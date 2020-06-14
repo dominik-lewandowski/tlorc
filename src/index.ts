@@ -1,2 +1,2 @@
-export {TloEvent} from './tlo-event';
+export {TloEventWrapper} from './tlo-event-wrapper';
 export * from './types/models';
