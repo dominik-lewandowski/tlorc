@@ -1,9 +1,9 @@
 Utils library for JavaScript/TypeScript, so you don't have to reinvent the wheel.
 
-##Installation
+## Installation
 `$ npm i -s tlorc`
 
-##Examples
+## Examples
 
 ```js
 const tlorc = require('tlorc');
@@ -34,8 +34,8 @@ function scrollEvent() {
 scrollEvent();
 ```
 
-##Docs
-####TloEventWrapper
+## Docs
+#### TloEventWrapper
 Used for managing DOM events.\
 `new TloEventWrapper(element)`
 
@@ -49,19 +49,19 @@ Instance methods:\
 The `types` parameter can be a string, an array of strings, an object `{type: string, useCapture?: boolean}` or 
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
 
-##Patch Notes
-####1.0.1
+## Patch Notes
+#### 1.0.1
 - Fixed a bug with removing event listeners
 - Fixed a bug with `new TloEventWrapper(element)` throwing an error for elements that may be null
-####1.0.0
+#### 1.0.0
 - Added `add` and `debounce` instance methods
 - Changed the event handler's name from TloEvent to TloEventWrapper
 - Added the option to set the `useCapture` parameter in TloEventWrapper methods
 - Added the docs
 - Fixed the callback reference
-####0.2.3
+#### 0.2.3
 - Fixed the main library path
-####0.2.2
+#### 0.2.2
 - Improved type checking
-####0.2.0
+#### 0.2.0
 - Added removing event listeners via `tloEvent.remove('eventName')` or `tloEvent.removeAll()`.
