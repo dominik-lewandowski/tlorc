@@ -2,8 +2,8 @@
   "name": "tlorc",
   "version": "0.2.2",
   "description": "Utils library for JavaScript/TypeScript, so you don't have to reinvent the wheel.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "keywords": [
     "utils",
     "util",
