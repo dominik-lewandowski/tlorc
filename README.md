@@ -35,6 +35,8 @@ scrollEvent();
 ```
 
 ##Patch Notes
+####0.2.3
+- Fixed the main library path
 ####0.2.2
 - Improved type checking
 ####0.2.0
