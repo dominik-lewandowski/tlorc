@@ -50,6 +50,9 @@ The `types` parameter can be a string, an array of strings, an object `{type: st
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
 
 ##Patch Notes
+####1.0.1
+- Fixed a bug with removing event listeners
+- Fixed a bug with `new TloEventWrapper(element)` throwing an error for elements that may be null
 ####1.0.0
 - Added `add` and `debounce` instance methods
 - Changed the event handler's name from TloEvent to TloEventWrapper
