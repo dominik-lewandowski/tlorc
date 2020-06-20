@@ -1,15 +1,15 @@
-import {TloEventConfig} from "..";
-import {TloEventTypeParameter} from "..";
-import {TloEventWrapperModel} from "..";
-import {TloTypeWithOptions} from "..";
-import {TloElement} from "..";
+import {TloEventConfig} from "./types/tlo-event-wrapper/tlo-event-config";
+import {TloEventTypeParameter} from "./types/tlo-event-wrapper/tlo-event-type-parameter";
+import {TloEventWrapperModel} from "./types/tlo-event-wrapper/tlo-event-wrapper-model";
+import {TloTypeWithOptions} from "./types/tlo-event-wrapper/tlo-type-with-options";
+import {TloElement} from "./types/tlo-event-wrapper/tlo-element";
 
 export class TloEventWrapper implements TloEventWrapperModel {
   private readonly el: TloElement;
   private activeEvents: TloEventConfig[];
 
   constructor(element: TloElement) {
-    if (element === null) throw new Error('TloEventWrapper: The element cannot be null');
+    if (element === null) throw new Error('The element cannot be null');
     this.el = element;
     this.activeEvents = [];
   }
