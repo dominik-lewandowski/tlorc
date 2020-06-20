@@ -1,6 +1,6 @@
 {
   "name": "tlorc",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Utils library for JavaScript/TypeScript, so you don't have to reinvent the wheel.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
