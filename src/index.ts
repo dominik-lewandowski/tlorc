@@ -15,4 +15,5 @@ export {TloHttpModel} from './types/tlo-http/tlo-http.model';
 export {TloHttpOptions} from './types/tlo-http/tlo-http-options';
 export {TloMode} from './types/tlo-http/tlo-mode';
 export {TloRedirect} from './types/tlo-http/tlo-redirect';
+export {TloParams} from "./types/tlo-http/tlo-params";
 // -----

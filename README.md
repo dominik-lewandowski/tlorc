@@ -73,6 +73,8 @@ A fetch http client.\
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 
 ## Patch Notes
+#### 1.2.0
+- Added params to TloHttp options
 #### 1.1.2
 - Fixed types for TloHttp body
 - Improved the docs
