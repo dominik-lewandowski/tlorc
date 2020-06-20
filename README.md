@@ -71,6 +71,8 @@ Instance methods:\
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 
 ## Patch Notes
+#### 1.1.1
+- Added TloHttp - a fetch http client (see docs for more details)
 #### 1.0.1
 - Fixed a bug with removing event listeners
 - Fixed a bug with `new TloEventWrapper(element)` throwing an error for elements that may be null
