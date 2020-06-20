@@ -48,6 +48,27 @@ Instance methods:\
 
 The `types` parameter can be a string, an array of strings, an object `{type: string, useCapture?: boolean}` or 
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
+#### TloHttp
+A fetch http client.\
+`new TloHttp()`
+
+Instance methods:\
+`get(url, options?): Promise`\
+`get$Response(url, options?): Promise`
+
+`post(url, body, options?): Promise`\
+`post$Response(url, body, options?): Promise`
+
+`put(url, body, options?): Promise`\
+`put$Response(url, body, options?): Promise`
+
+`patch(url, body, options?): Promise`\
+`patch$Response(url, body, options?): Promise`
+
+`delete(url, body, options?): Promise`\
+`delete$Response(url, body, options?): Promise`
+
+Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 
 ## Patch Notes
 #### 1.0.1
