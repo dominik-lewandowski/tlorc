@@ -1,4 +1,5 @@
 import {TloHttpOptions} from "./tlo-http-options";
+import {TloFullResponse} from "./tlo-full-response";
 
 export interface TloHttpModel {
   /**
@@ -8,7 +9,7 @@ export interface TloHttpModel {
   /**
    * @description This method returns the full response object. To only get the response body, use get()
    */
-  get$Response: <T>(url: RequestInfo, options?: TloHttpOptions) => Promise<Response & {body: T | ReadableStream | null}>;
+  get$Response: <T>(url: RequestInfo, options?: TloHttpOptions) => Promise<TloFullResponse<T>>;
 
   /**
    * @description This method returns only the response body. For full response use post$Response()
@@ -17,7 +18,7 @@ export interface TloHttpModel {
   /**
    * @description This method returns the full response object. To only get the response body, use post()
    */
-  post$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<Response & {body: T | ReadableStream | null}>;
+  post$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<TloFullResponse<T>>;
 
   /**
    * @description This method returns only the response body. For full response use put$Response()
@@ -26,7 +27,7 @@ export interface TloHttpModel {
   /**
    * @description This method returns the full response object. To only get the response body, use put()
    */
-  put$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<Response & {body: T | ReadableStream | null}>;
+  put$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<TloFullResponse<T>>;
 
   /**
    * @description This method returns only the response body. For full response use patch$Response()
@@ -35,7 +36,7 @@ export interface TloHttpModel {
   /**
    * @description This method returns the full response object. To only get the response body, use patch()
    */
-  patch$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<Response & {body: T | ReadableStream | null}>;
+  patch$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<TloFullResponse<T>>;
 
   /**
    * @description This method returns only the response body. For full response use delete$Response()
@@ -44,5 +45,5 @@ export interface TloHttpModel {
   /**
    * @description This method returns the full response object. To only get the response body, use delete()
    */
-  delete$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<Response & {body: T | ReadableStream | null}>;
+  delete$Response: <T, U>(url: RequestInfo, body: U, options?: TloHttpOptions) => Promise<TloFullResponse<T>>;
 }

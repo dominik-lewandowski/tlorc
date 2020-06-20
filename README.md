@@ -55,24 +55,26 @@ A fetch http client.\
 
 | Method | Return Type |
 | --- | --- |
-| `get<ResponseBody>(url, options?)` | `Promise<ResponseBody>` |
-| `get$Response<ResponseBody>(url, options?)` | `Promise<Response>` |
+| `get<T>(url, options?)` | `Promise<T>` |
+| `get$Response<T>(url, options?)` | `Promise<TloFullResponse<T>>` |
 |  |  |
-| `post<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
-| `post$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+| `post<T>(url, body, options?)` | `Promise<T>` |
+| `post$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
 |  |  |
-| `put<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
-| `put$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+| `put<T>(url, body, options?)` | `Promise<T>` |
+| `put$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
 |  |  |
-| `patch<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
-| `patch$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+| `patch<T>(url, body, options?)` | `Promise<T>` |
+| `patch$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
 |  |  |
-| `delete<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
-| `delete$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+| `delete<T>(url, body, options?)` | `Promise<T>` |
+| `delete$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
 
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
-
 ## Patch Notes
+#### 1.2.2
+- Improved types for TloHttp
+- Fixed a typing bug with method$Response methods. Now, the return type for them is `Promise<TloFullResponse<T>>` (see docs).
 #### 1.2.0
 - Added params to TloHttp options
 #### 1.1.2
