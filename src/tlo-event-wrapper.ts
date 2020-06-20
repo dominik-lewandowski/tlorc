@@ -23,16 +23,17 @@ export class TloEventWrapper implements TloEventWrapperModel {
     }
   }
 
-  add(types: TloEventTypeParameter, callback: (event?: Event) => void): void {
+  add(types: TloEventTypeParameter, callback: (event: Event) => void): TloEventWrapper {
     TloEventWrapper.iterateThroughTypes(types, event => {
-      const eventListener = (e?: Event) => callback(e);
+      const eventListener = (e: Event) => callback(e);
       this.initListener(event, eventListener);
     });
+    return this;
   }
 
-  throttle(types: TloEventTypeParameter, callback: (event?: Event) => void, throttleTime = 100): void {
+  throttle(types: TloEventTypeParameter, callback: (event: Event) => void, throttleTime = 100): TloEventWrapper {
     TloEventWrapper.iterateThroughTypes(types, event => {
-      const throttleListener = (e?: Event) => {
+      const throttleListener = (e: Event) => {
         const activeEvent = this.findActiveByType(event.type);
         if (activeEvent && activeEvent.throttleId) return;
 
@@ -43,12 +44,13 @@ export class TloEventWrapper implements TloEventWrapperModel {
       };
       this.initListener(event, throttleListener);
     });
+    return this;
   }
 
-  debounce(types: TloEventTypeParameter, callback: (event?: Event) => void, debounceTime = 200): void {
+  debounce(types: TloEventTypeParameter, callback: (event: Event) => void, debounceTime = 200): TloEventWrapper {
     TloEventWrapper.iterateThroughTypes(types, event => {
       const activeEvent = this.findActiveByType(event.type);
-      const debounceListener = (e?: Event) => {
+      const debounceListener = (e: Event) => {
 
         clearTimeout(activeEvent!.debounceId);
         activeEvent!.debounceId = setTimeout(() => {
@@ -56,10 +58,11 @@ export class TloEventWrapper implements TloEventWrapperModel {
         }, debounceTime);
       };
       this.initListener(event, debounceListener);
-    })
+    });
+    return this;
   }
 
-  remove(types: string | string[]): void {
+  remove(types: string | string[]): TloEventWrapper {
     TloEventWrapper.iterateThroughTypes(types, event => {
       const active = this.findActiveByType(event.type);
       if (active) {
@@ -68,19 +71,21 @@ export class TloEventWrapper implements TloEventWrapperModel {
         this.el.removeEventListener(active.event.type, active.callback, active.event.useCapture);
       }
     });
+    return this;
   }
 
-  removeAll(): void {
+  removeAll(): TloEventWrapper {
     for (const active of this.activeEvents) {
       this.removeListener(active);
     }
+    return this;
   }
 
   private findActiveByType(type: string): TloEventConfig | undefined {
     return this.activeEvents.find(e => e.event.type === type);
   }
 
-  private initListener(event: TloTypeWithOptions, callback: (event?: Event) => void): void {
+  private initListener(event: TloTypeWithOptions, callback: (event: Event) => void): void {
     this.activeEvents.push({event, callback});
     if (this.el === null) throw new Error('The element does not exist.');
     this.el.addEventListener(event.type, callback, event.useCapture);

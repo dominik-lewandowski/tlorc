@@ -41,11 +41,11 @@ Used for managing DOM events.\
 
 | Method | Return Type |
 | --- | --- |
-| `add(types, callback)` | `void` |
-| `throttle(types, callback, throttleTime = 100)` | `void` |
-| `debounce(types, callback, debounceTime = 200)` | `void` |
-| `remove(types)` | `void` |
-| `removeAll()` | `void` |
+| `add(types, callback)` | `TloEventWrapper` |
+| `throttle(types, callback, throttleTime = 100)` | `TloEventWrapper` |
+| `debounce(types, callback, debounceTime = 200)` | `TloEventWrapper` |
+| `remove(types)` | `TloEventWrapper` |
+| `removeAll()` | `TloEventWrapper` |
 
 The `types` parameter can be a string, an array of strings, an object `{type: string, useCapture?: boolean}` or 
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
@@ -72,6 +72,9 @@ A fetch http client.\
 
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 ## Patch Notes
+#### 1.2.3
+- [TloEventWrapper] Fixed the bug where callbacks with an argument would need to be undefined checked
+- [TloEventWrapper] Added a functionality for all methods - now they all return their instance of `TloEventWrapper`, which allows for method chaining
 #### 1.2.2
 - Improved types for TloHttp
 - Fixed a typing bug with method$Response methods. Now, the return type for them is `Promise<TloFullResponse<T>>` (see docs).
