@@ -7,44 +7,44 @@ export class TloHttp implements TloHttpModel {
     return await fetch(url, {...options, method: 'GET'} as unknown as RequestInit)
       .then(res => res.json());
   }
-  async get$Response(url: RequestInfo, options?: TloHttpOptions): Promise<Response> {
+  async get$Response<T>(url: RequestInfo, options?: TloHttpOptions): Promise<Response & {body: T | ReadableStream | null}> {
     return await fetch(url, {...options, method: 'GET'} as unknown as RequestInit);
   }
 
-  async post<T>(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<T> {
+  async post<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     return await fetch(url, {...options, method: 'POST', body} as unknown as RequestInit)
       .then(res => res.json());
   }
-  async post$Response(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<Response> {
+  async post$Response<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<Response & {body: T | ReadableStream | null}> {
     return await fetch(url, {...options, method: 'POST', body} as unknown as RequestInit);
   }
 
-  async put(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<Response> {
+  async put<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     return await fetch(url, {...options, method: 'PUT', body} as unknown as RequestInit)
       .then(res => res.json())
       .then(d => d.body);
   }
-  async put$Response(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<Response> {
+  async put$Response<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<Response & {body: T | ReadableStream | null}> {
     return await fetch(url, {...options, method: 'PUT', body} as unknown as RequestInit)
       .then(res => res.json());
   }
 
-  async patch<T>(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<T> {
+  async patch<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     return await fetch(url, {...options, method: 'PATCH', body} as unknown as RequestInit)
       .then(res => res.json())
       .then(d => d.body);
   }
-  async patch$Response(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<Response> {
+  async patch$Response<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<Response & {body: T | ReadableStream | null}> {
     return await fetch(url, {...options, method: 'PATCH', body} as unknown as RequestInit)
       .then(res => res.json());
   }
 
-  async delete<T>(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<T> {
+  async delete<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     return await fetch(url, {...options, method: 'DELETE', body} as unknown as RequestInit)
       .then(res => res.json())
       .then(d => d.body);
   }
-  async delete$Response(url: RequestInfo, body: BodyInit, options?: TloHttpOptions): Promise<Response> {
+  async delete$Response<T, U>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<Response & {body: T | ReadableStream | null}> {
     return await fetch(url, {...options, method: 'DELETE', body} as unknown as RequestInit)
       .then(res => res.json());
   }

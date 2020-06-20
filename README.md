@@ -39,12 +39,13 @@ scrollEvent();
 Used for managing DOM events.\
 `new TloEventWrapper(element)`
 
-Instance methods:\
-`add(types, callback): void`\
-`throttle(types, callback, throttleTime = 100): void `\
-`debounce(types, callback, debounceTime = 200): void`\
-`remove(types): void`\
-`removeAll(): void`
+| Method | Return Type |
+| --- | --- |
+| `add(types, callback)` | `void` |
+| `throttle(types, callback, throttleTime = 100)` | `void` |
+| `debounce(types, callback, debounceTime = 200)` | `void` |
+| `remove(types)` | `void` |
+| `removeAll()` | `void` |
 
 The `types` parameter can be a string, an array of strings, an object `{type: string, useCapture?: boolean}` or 
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
@@ -52,25 +53,29 @@ an array of objects. The exception is the `remove` method, which only takes a st
 A fetch http client.\
 `new TloHttp()`
 
-Instance methods:\
-`get(url, options?): Promise`\
-`get$Response(url, options?): Promise`
-
-`post(url, body, options?): Promise`\
-`post$Response(url, body, options?): Promise`
-
-`put(url, body, options?): Promise`\
-`put$Response(url, body, options?): Promise`
-
-`patch(url, body, options?): Promise`\
-`patch$Response(url, body, options?): Promise`
-
-`delete(url, body, options?): Promise`\
-`delete$Response(url, body, options?): Promise`
+| Method | Return Type |
+| --- | --- |
+| `get<ResponseBody>(url, options?)` | `Promise<ResponseBody>` |
+| `get$Response<ResponseBody>(url, options?)` | `Promise<Response>` |
+|  |  |
+| `post<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
+| `post$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+|  |  |
+| `put<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
+| `put$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+|  |  |
+| `patch<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
+| `patch$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
+|  |  |
+| `delete<ResponseBody>(url, body, options?)` | `Promise<ResponseBody>` |
+| `delete$Response<ResponseBody>(url, body, options?)` | `Promise<Response>` |
 
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 
 ## Patch Notes
+#### 1.1.2
+- Fixed types for TloHttp body
+- Improved the docs
 #### 1.1.1
 - Added TloHttp - a fetch http client (see docs for more details)
 #### 1.0.1
