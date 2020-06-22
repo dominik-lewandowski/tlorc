@@ -51,7 +51,7 @@ The `types` parameter can be a string, an array of strings, an object `{type: st
 an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
 #### TloHttp
 A fetch http client.\
-`new TloHttp()`
+`new TloHttp(headers?)`
 
 | Method | Return Type |
 | --- | --- |
@@ -72,6 +72,10 @@ A fetch http client.\
 
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 ## Patch Notes
+#### 1.3.0 (22.06.2020)
+- [TloHttp] Added a default Content Type header 'application/json'
+- [TloHttp] Added an optional 'headers' parameter to the constructor.
+- [TloHttp] Added the option to modify instance-level headers via `new TloHttp().headers`
 #### 1.2.4 (22.06.2020)
 - [TloHttp] Fixed a bug with missing body
 #### 1.2.3
