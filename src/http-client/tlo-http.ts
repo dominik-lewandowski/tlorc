@@ -16,9 +16,10 @@ export class TloHttp implements TloHttpModel {
     }).join('&');
   }
 
-  private static addOptions(method: string, options?: TloHttpOptions): RequestInit {
+  private static addOptions<T>(method: string, options?: TloHttpOptions, body?: T): RequestInit {
     if (options) delete options.params;
-    return {credentials: 'same-origin', redirect: 'error', method, ...options} as RequestInit;
+    if (body && typeof body !== "object") throw new Error('TloHttp: Body must be an object or an array.');
+    return {credentials: 'same-origin', redirect: 'error', method, body: body ? JSON.stringify(body) : undefined, ...options} as RequestInit;
   }
 
   async get<T = {}>(url: RequestInfo, options?: TloHttpOptions): Promise<T> {
@@ -33,47 +34,47 @@ export class TloHttp implements TloHttpModel {
 
   async post<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'POST', options))
+    return await fetch(url_, TloHttp.addOptions( 'POST', options, body))
       .then(res => res.json());
   }
   async post$Response<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'POST', options));
+    return await fetch(url_, TloHttp.addOptions( 'POST', options, body));
   }
 
   async put<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'PUT', options))
+    return await fetch(url_, TloHttp.addOptions( 'PUT', options, body))
       .then(res => res.json())
       .then(d => d.body);
   }
   async put$Response<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'PUT', options))
+    return await fetch(url_, TloHttp.addOptions( 'PUT', options, body))
       .then(res => res.json());
   }
 
   async patch<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'PATCH', options))
+    return await fetch(url_, TloHttp.addOptions( 'PATCH', options, body))
       .then(res => res.json())
       .then(d => d.body);
   }
   async patch$Response<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'PATCH', options))
+    return await fetch(url_, TloHttp.addOptions( 'PATCH', options, body))
       .then(res => res.json());
   }
 
   async delete<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'DELETE', options))
+    return await fetch(url_, TloHttp.addOptions( 'DELETE', options, body))
       .then(res => res.json())
       .then(d => d.body);
   }
   async delete$Response<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, TloHttp.addOptions( 'DELETE', options))
+    return await fetch(url_, TloHttp.addOptions( 'DELETE', options, body))
       .then(res => res.json());
   }
 }
