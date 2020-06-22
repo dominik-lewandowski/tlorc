@@ -72,6 +72,8 @@ A fetch http client.\
 
 Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
 ## Patch Notes
+#### 1.2.4 (22.06.2020)
+- [TloHttp] Fixed a bug with missing body
 #### 1.2.3
 - [TloEventWrapper] Fixed the bug where callbacks with an argument would need to be undefined checked
 - [TloEventWrapper] Added a functionality for all methods - now they all return their instance of `TloEventWrapper`, which allows for method chaining
