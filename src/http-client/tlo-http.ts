@@ -55,11 +55,11 @@ export class TloHttp implements TloHttpModel {
   }
 
   // DELETE request methods
-  async delete<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
-    return await this.buildRequest<T, U>(url, 'DELETE', options, body) as T;
+  async delete<T = null>(url: RequestInfo, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T>(url, 'DELETE', options, undefined) as T;
   }
-  async delete$Full<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    return await this.buildRequest<T, U>(url, 'DELETE', options, body, true) as TloFullResponse<T>;
+  async delete$Full<T = null>(url: RequestInfo, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T>(url, 'DELETE', options, undefined, true) as TloFullResponse<T>;
   }
 
   // instance headers getter
