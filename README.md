@@ -48,7 +48,7 @@ Check https://github.com/tlo-devs/tlorc/wiki/
 - [TloEventWrapper] Added a functionality for all methods - now they all return their instance of `TloEventWrapper`, which allows for method chaining
 #### 1.2.2
 - Improved types for TloHttp
-- Fixed a typing bug with method$Response methods. Now, the return type for them is `Promise<TloFullResponse<T>>` (see docs).
+- Fixed a typing bug with method$Full methods. Now, the return type for them is `Promise<TloFullResponse<T>>` (see docs).
 #### 1.2.0
 - Added params to TloHttp options
 #### 1.1.2
