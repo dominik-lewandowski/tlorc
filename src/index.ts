@@ -1,4 +1,5 @@
 // TloEventWrapper types
+
 export {TloEventWrapper} from './tlo-event-wrapper';
 export {TloEventTypeParameter} from './types/tlo-event-wrapper/tlo-event-type-parameter';
 export {TloEventConfig} from './types/tlo-event-wrapper/tlo-event-config';
@@ -17,4 +18,8 @@ export {TloMode} from './types/tlo-http/tlo-mode';
 export {TloRedirect} from './types/tlo-http/tlo-redirect';
 export {TloParams} from "./types/tlo-http/tlo-params";
 export {TloFullResponse} from './types/tlo-http/tlo-full-response';
+// -----
+
+// Tlorc types
+export {Tlorc} from './tlorc';
 // -----

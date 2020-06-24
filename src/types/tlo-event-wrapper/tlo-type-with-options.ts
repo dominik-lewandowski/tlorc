@@ -1,4 +1,4 @@
 export interface TloTypeWithOptions {
   type: string;
-  useCapture: boolean;
+  useCapture?: boolean;
 }

@@ -1,4 +1,4 @@
-import {TloHttpOptions, TloParams} from "..";
+import {TloHttpOptions, TloParams, Tlorc} from "..";
 import {TloHttpModel} from "..";
 import {TloFullResponse} from "..";
 
@@ -7,8 +7,7 @@ export class TloHttp implements TloHttpModel {
   private readonly _headers: Headers;
 
   constructor(headers?: Headers) {
-    this._headers = headers || new Headers();
-    if (!headers) this._headers.append('Content-Type', 'application/json');
+    this._headers = headers || new Headers({'Content-Type': 'application/json'});
   }
 
   private static createUrl(url: RequestInfo, params?: TloParams): RequestInfo {
@@ -23,76 +22,100 @@ export class TloHttp implements TloHttpModel {
     }).join('&');
   }
 
-  private addOptions<T>(method: string, options?: TloHttpOptions, body?: T): RequestInit {
+  // GET request methods
+  async get<T = {}>(url: RequestInfo, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T>(url, 'GET', options) as T;
+  }
+  async get$Full<T = {}>(url: RequestInfo, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T>(url, 'GET', options, undefined, true) as TloFullResponse<T>;
+  }
+
+  // POST request methods
+  async post<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T, U>(url, 'POST', options, body) as T;
+  }
+  async post$Full<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T, U>(url, 'POST', options, body) as TloFullResponse<T>;
+  }
+
+  // PUT request methods
+  async put<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T, U>(url, 'PUT', options, body) as T;
+  }
+  async put$Full<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T, U>(url, 'PUT', options, body, true) as TloFullResponse<T>;
+  }
+
+  // PATCH request methods
+  async patch<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T, U>(url, 'PATCH', options, body) as T;
+  }
+  async patch$Full<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T, U>(url, 'PATCH', options, body, true) as TloFullResponse<T>;
+  }
+
+  // DELETE request methods
+  async delete<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
+    return await this.buildRequest<T, U>(url, 'DELETE', options, body) as T;
+  }
+  async delete$Full<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
+    return await this.buildRequest<T, U>(url, 'DELETE', options, body, true) as TloFullResponse<T>;
+  }
+
+  // instance headers getter
+  get headers(): Headers {
+    return this._headers;
+  }
+
+  private buildOptions<T>(method: string, options?: TloHttpOptions, body?: T): RequestInit {
+    let body_;
+
     if (options) delete options.params;
-    if (body && typeof body !== "object") throw new Error('TloHttp: Body must be an object or an array.');
+    if (body) {
+      if (Tlorc.isFile(body) || Tlorc.isBlob(body) || this.fileInContentType()) body_ = body;
+      else body_ = JSON.stringify(body);
+    }
+
     return {
       headers: this._headers,
       credentials: 'same-origin',
       redirect: 'error',
       method,
-      body: body ? JSON.stringify(body) : undefined,
+      body: body_,
       ...options
     } as RequestInit;
   }
 
-  async get<T = {}>(url: RequestInfo, options?: TloHttpOptions): Promise<T> {
+  private buildRequest<T, U = undefined>(
+    url: RequestInfo,
+    method: string,
+    options?: TloHttpOptions,
+    body?: U,
+    full?: boolean
+  ): Promise<TloFullResponse<T> | T> {
     const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'GET', options))
-      .then(res => res.json());
-  }
-  async get$Response<T>(url: RequestInfo, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'GET', options));
+    return fetch(url_, this.buildOptions( method, options, body)).then(res => {
+      if (res.ok) {
+        if (full) return res;
+        if (this.fileInContentType()) return res.blob();
+        return res.json();
+      }
+
+      const error = new Error(res.statusText);
+      throw {...error, response: res};
+    });
   }
 
-  async post<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'POST', options, body))
-      .then(res => res.json());
-  }
-  async post$Response<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'POST', options, body));
-  }
+  private fileInContentType(): boolean {
+    const contentType = this._headers.get('Content-Type');
+    if (!contentType) return false;
 
-  async put<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'PUT', options, body))
-      .then(res => res.json())
-      .then(d => d.body);
-  }
-  async put$Response<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'PUT', options, body))
-      .then(res => res.json());
-  }
-
-  async patch<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'PATCH', options, body))
-      .then(res => res.json())
-      .then(d => d.body);
-  }
-  async patch$Response<T = {}, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'PATCH', options, body))
-      .then(res => res.json());
-  }
-
-  async delete<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<T> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'DELETE', options, body))
-      .then(res => res.json())
-      .then(d => d.body);
-  }
-  async delete$Response<T = null, U = {}>(url: RequestInfo, body: U, options?: TloHttpOptions): Promise<TloFullResponse<T>> {
-    const url_ = TloHttp.createUrl(url, options ? options.params : undefined);
-    return await fetch(url_, this.addOptions( 'DELETE', options, body))
-      .then(res => res.json());
-  }
-
-  get headers(): Headers {
-    return this._headers;
+    return contentType.includes('octet-stream')
+      || contentType.includes('zip')
+    || contentType.includes('vnd.ms-excel')
+    || contentType.includes('msword')
+    || contentType.includes('vnd.ms-powerpoint')
+    || contentType.includes('image')
+    || contentType.includes('pdf');
   }
 }

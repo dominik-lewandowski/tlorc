@@ -5,76 +5,41 @@ Utils library for JavaScript/TypeScript, so you don't have to reinvent the wheel
 
 ## Examples
 
-```js
-const tlorc = require('tlorc');
-const TloEventWrapper = tlorc.TloEventWrapper;
-
-const el = document.getElementById('foo');
-const tloEvent = new TloEventWrapper(el);
-
-function scrollEvent() {
-  tloEvent.throttle('scroll', () => {
-    // code here
-  });
-}
-scrollEvent();
-```
-or
+TloEventWrapper:
 ```js
 import {TloEventWrapper} from 'tlorc';
 
 const el = document.getElementById('foo');
 const tloEvent = new TloEventWrapper(el);
 
-function scrollEvent() {
-  tloEvent.throttle('scroll', () => {
-    // code here
-  });
-}
-scrollEvent();
+tloEvent.throttle('scroll', () => {
+  // code here
+});
 ```
 
-## Docs
-#### TloEventWrapper
-Used for managing DOM events.\
-`new TloEventWrapper(element)`
+TloHttp:
+```js
+import {TloHttp} from 'tlorc';
 
-| Method | Return Type |
-| --- | --- |
-| `add(types, callback)` | `TloEventWrapper` |
-| `throttle(types, callback, throttleTime = 100)` | `TloEventWrapper` |
-| `debounce(types, callback, debounceTime = 200)` | `TloEventWrapper` |
-| `remove(types)` | `TloEventWrapper` |
-| `removeAll()` | `TloEventWrapper` |
+const http = new TloHttp();
+http.get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(data => console.log(data));
+```
 
-The `types` parameter can be a string, an array of strings, an object `{type: string, useCapture?: boolean}` or 
-an array of objects. The exception is the `remove` method, which only takes a string or an array of strings.
-#### TloHttp
-A fetch http client.\
-`new TloHttp(headers?)`
-
-| Method | Return Type |
-| --- | --- |
-| `get<T>(url, options?)` | `Promise<T>` |
-| `get$Response<T>(url, options?)` | `Promise<TloFullResponse<T>>` |
-|  |  |
-| `post<T>(url, body, options?)` | `Promise<T>` |
-| `post$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
-|  |  |
-| `put<T>(url, body, options?)` | `Promise<T>` |
-| `put$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
-|  |  |
-| `patch<T>(url, body, options?)` | `Promise<T>` |
-| `patch$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
-|  |  |
-| `delete<T>(url, body, options?)` | `Promise<T>` |
-| `delete$Response<T>(url, body, options?)` | `Promise<TloFullResponse<T>>` |
-
-Methods with suffix $Response return the whole response object. Methods without the suffix only return the response body.
+## Documentation
+Check https://github.com/tlo-devs/tlorc/wiki/
 ## Patch Notes
+#### 1.4.0 (24.06.2020)
+- Moved and extended the documentation (https://github.com/tlo-devs/tlorc/wiki/)
+- Fixed method types being displayed as props in the interfaces
+- [TloEventWrapper] Changed useCapture to be optional when adding an event with object syntax
+- [TloHttp] Fixed issues with PUT/DELETE
+- [TloHttp] Added support for Blobs
+- [TloHttp] Improved error handling
+- Added basic utils to [Tlorc]
 #### 1.3.0 (22.06.2020)
 - [TloHttp] Added a default Content Type header 'application/json'
-- [TloHttp] Added an optional 'headers' parameter to the constructor.
+- [TloHttp] Added an optional 'headers' parameter to the constructor
 - [TloHttp] Added the option to modify instance-level headers via `new TloHttp().headers`
 #### 1.2.4 (22.06.2020)
 - [TloHttp] Fixed a bug with missing body
