@@ -29,6 +29,8 @@ http.get('https://jsonplaceholder.typicode.com/todos/1')
 ## Documentation
 Check https://github.com/tlo-devs/tlorc/wiki/
 ## Patch Notes
+#### 1.4.2 (07.03.2021)
+- [TloEventWrapper] Fixed an issue with debounce
 #### 1.4.0 (24.06.2020)
 - Moved and extended the documentation (https://github.com/tlo-devs/tlorc/wiki/)
 - Fixed method types being displayed as props in the interfaces

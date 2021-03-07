@@ -49,9 +49,8 @@ export class TloEventWrapper implements TloEventWrapperModel {
 
   debounce(types: TloEventTypeParameter, callback: (event: Event) => void, debounceTime = 200): TloEventWrapper {
     TloEventWrapper.iterateThroughTypes(types, event => {
-      const activeEvent = this.findActiveByType(event.type);
       const debounceListener = (e: Event) => {
-
+        const activeEvent = this.findActiveByType(event.type);
         clearTimeout(activeEvent!.debounceId);
         activeEvent!.debounceId = setTimeout(() => {
           callback(e);
